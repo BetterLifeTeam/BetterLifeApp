@@ -118,18 +118,16 @@ export default class Calendar extends Component {
     renderItem(item) {
         console.log(this.state);
         if (item.hour) {
-            task = <Text>{item.title}</Text>
         }
         return (
             <View style={[styles.item, { height: item.height }]}>
-                {hoursInDay.map((hour, key) => (
-                    //key is the index of the array 
-                    //item is the single item of the array
-                    <View>
-                        <Text>{hour}--------------------------------------------------------</Text>
-                        
-                    </View>
-                ))}
+                {/* {hoursInDay.map((hour, key) => ( */}
+                <Text>{item.title}</Text>
+                {/* <View> */}
+                {/* <Text>{hour}--------------------------------------------------------</Text> */}
+
+                {/* </View> */}
+                {/* ))} */}
             </View>
         );
     }

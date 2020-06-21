@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 
 export default function Agenda() {
@@ -21,11 +21,77 @@ export default function Agenda() {
         <View style={styles.container}>
             <WeeklyCalendar
                 events={sampleEvents}
-                style={{ 
-                    marginTop: 100,
-                    height: "100%" 
+                style={{
+                    marginTop: 75,
+                    height: "90%"
                 }}
                 startWeekday={1}
+                renderEvent={(event, j) => {
+                    let startTime = moment(event.start).format('LT').toString()
+                    let duration = event.duration.split(':')
+                    let seconds = parseInt(duration[0]) * 3600 + parseInt(duration[1]) * 60 + parseInt(duration[2])
+                    let endTime = moment(event.start).add(seconds, 'seconds').format('LT').toString()
+                    return (
+                        <View key={j}>
+                            <View style={styles.event}>
+                                <View style={styles.eventDuration}>
+                                    <View style={styles.durationContainer}>
+                                        <View style={styles.durationDot} />
+                                        <Text style={styles.durationText}>{startTime}</Text>
+                                    </View>
+                                    <View style={{ paddingTop: 10 }} />
+                                    <View style={styles.durationContainer}>
+                                        <View style={styles.durationDot} />
+                                        <Text style={styles.durationText}>{endTime}</Text>
+                                    </View>
+                                    <View style={styles.durationDotConnector} />
+                                </View>
+                                <View style={styles.eventNote}>
+                                    <Text style={styles.eventText}>{event.note}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.lineSeparator} />
+                        </View>
+                    )
+                }}
+                renderLastEvent={(event, j) => {
+                    let startTime = moment(event.start).format('LT').toString()
+                    let duration = event.duration.split(':')
+                    let seconds = parseInt(duration[0]) * 3600 + parseInt(duration[1]) * 60 + parseInt(duration[2])
+                    let endTime = moment(event.start).add(seconds, 'seconds').format('LT').toString()
+                    return (
+                        <View key={j}>
+                            <View style={styles.event}>
+                                <View style={styles.eventDuration}>
+                                    <View style={styles.durationContainer}>
+                                        <View style={styles.durationDot} />
+                                        <Text style={styles.durationText}>{startTime}</Text>
+                                    </View>
+                                    <View style={{ paddingTop: 10 }} />
+                                    <View style={styles.durationContainer}>
+                                        <View style={styles.durationDot} />
+                                        <Text style={styles.durationText}>{endTime}</Text>
+                                    </View>
+                                    <View style={styles.durationDotConnector} />
+                                </View>
+                                <View style={styles.eventNote}>
+                                    <Text style={styles.eventText}>{event.note}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    )
+                }}
+                renderDay={(eventViews, weekdayToAdd, i) => (
+                    <View key={i.toString()} style={styles.day}>
+                        <View style={styles.dayLabel}>
+                            <Text style={[styles.monthDateText, { color: 'pink' }]}>{weekdayToAdd.format('M/D').toString()}</Text>
+                            <Text style={[styles.dayText, { color: 'pink' }]}>{weekdayToAdd.format('ddd').toString()}</Text>
+                        </View>
+                        <View style={[styles.allEvents, eventViews.length === 0 ? { width: '100%', backgroundColor: 'pink' } : {}]}>
+                            {eventViews}
+                        </View>
+                    </View>
+                )}
             />
         </View>
     );
