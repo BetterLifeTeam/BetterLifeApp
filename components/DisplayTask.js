@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 
 function DisplayTask(props) {
     return (<View>
-                <Text>{props.task.nom}</Text>
+                <Text>{props.item.title}</Text>
             </View>);
 }
 
