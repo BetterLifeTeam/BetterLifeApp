@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
@@ -142,3 +143,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
+

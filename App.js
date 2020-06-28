@@ -5,6 +5,7 @@ import Store from './Store/configureStore'
 import Navigation from './Navigation/Navigation';
 
 export default function App() {
+
   return (
     <Provider store={Store}>
       <Navigation />
@@ -14,6 +15,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 50,
     flex: 1,
     backgroundColor: '#fff',
   },
