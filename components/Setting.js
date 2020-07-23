@@ -1,69 +1,171 @@
-import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, TextInput, Button, Picker, ScrollView } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { Component } from 'react';
+import { View, StyleSheet, Button } from 'react-native';
+import moment from 'moment';
+import { connect } from 'react-redux';
 
-export default function Setting() {
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+import t from 'tcomb-form-native';
 
-    const showDatePicker = () => {
-      setDatePickerVisibility(true);
-    };
-  
-    const hideDatePicker = () => {
-      setDatePickerVisibility(false);
-    };
-  
-    const handleConfirm = (time) => {
-      console.log("A time has been picked: ", time);
-      hideDatePicker();
-    };
+const Form = t.form.Form;
 
-  return (
-    <ScrollView style={{ padding: 15 }}>
-        <View style={{ marginBottom: 20 }}>
-            <Text style={styles.label}>Wake up time : </Text>
-            <Button title="Select wake up time" onPress={showDatePicker} />
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="time"
-                locale="fr_FR"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-            />
-      </View>
+const ReservedTime = t.struct({
+  wakeUp: t.Date,
+  lunch: t.Date,
+  lunchDuration : t.Num,
+  dinner: t.Date,
+  dinnerDuration  : t.Num,
+  sleep: t.Date,
+});
 
-      <Button title="Envoyer" />
-    </ScrollView>
-  );
+const formStyles = {
+  ...Form.stylesheet,
+  formGroup: {
+    normal: {
+      marginBottom: 10
+    },
+  },
+  controlLabel: {
+    normal: {
+      color: 'pink',
+      fontSize: 18,
+      marginBottom: 7,
+      fontWeight: '600'
+    },
+    error: {
+      color: 'red',
+      fontSize: 18,
+      marginBottom: 7,
+      fontWeight: '600'
+    }
+  }
 }
 
+const options = {
+  fields: {
+    wakeUp: {
+      mode: 'time',
+      error: 'You need to configure a wake up time',
+      label: 'Wake-Up',
+      config: {
+        defaultValueText: 'Click here to configure Wake-Up',
+        format: (date) => {
+           return moment(date).format('LT');
+        },
+     },
+    },
+    lunch: {
+      mode: 'time',
+      error: 'You need to precise your lunch time',
+      config: {
+        defaultValueText: 'Click here to configure lunch time',
+        format: (date) => {
+           return moment(date).format('LT');
+        },
+     },
+    },
+    lunchDuration: {
+      label: 'Duration of lunch in minute',
+    },
+    dinner: {
+      mode: 'time',
+      error: 'You need to precise your dinner time',
+      config: {
+        defaultValueText: 'Click here to configure dinner time',
+        format: (date) => {
+           return moment(date).format('LT');
+        },
+     },
+    },
+    dinnerDuration: {
+      label: 'Duration of dinner in minute',
+    },
+    sleep: {
+      mode: 'time',
+      error: 'You need to precise your sleep time',
+      config: {
+        defaultValueText: 'Click here to configure slepping time',
+        format: (date) => {
+           return moment(date).format('LT');
+        },
+     },
+    },
+  },
+  stylesheet: formStyles,
+};
+
+class Setting extends Component {
+  handleSubmit = () => {
+    const value = this._form.getValue();
+
+    const wakeUp = moment(value.wakeUp).format('HH:mm:00');
+    const sleep = moment(value.sleep).format('HH:mm:00');
+
+    const lunch = { 
+      'start': moment(value.lunch).format('HH:mm:00'), 
+      'duration': time_convert(value.lunchDuration), 
+      'note': 'Lunch moment' 
+    };
+
+    const dinner = { 
+      'start': moment(value.dinner).format('HH:mm:00'), 
+      'duration': time_convert(value.dinnerDuration), 
+      'note': 'Dinner moment' 
+    };
+
+    // { 'start': '2020-06-23 09:00:00', 'duration': '00:20:00', 'note': 'Walk my dog' },
+    const setting = { 
+      "wakeUp": wakeUp,
+      "lunch": lunch,
+      "dinner": dinner,
+      "sleep": sleep,
+    }
+    console.log('valuesetting: ', setting);
+
+    const action = {type: "TOGGLE_SETTING", value: setting}
+    this.props.dispatch(action)
+    console.log('props after: ', this.props);
+    console.log('props after: ', this.props.timeSettings);
+  }
+  
+  render() {
+    console.log("props", this.props);
+    return (
+      <View style={styles.container}>
+        <Form 
+          ref={c => this._form = c}
+          type={ReservedTime} 
+          options={options}
+        />
+        <Button
+          title="Register information"
+          onPress={this.handleSubmit}
+        />
+      </View>
+    );
+  }
+}
+
+function time_convert(num)
+ { 
+  const hours = Math.floor(num / 60);  
+  const minutes = num % 60;
+  return `${hours}:${minutes}:00`;         
+}
+
+const mapStateToProps = (state) => {
+   return {
+    timeSettings: state.timeSettings,
+    dattedTask: state.dattedTask,
+   }
+}
+
+export default connect(mapStateToProps)(Setting);
+// export default Setting;
+
 const styles = StyleSheet.create({
-    label: {
-      color: '#373535',
-      margin: 20,
-      marginLeft: 0,
-    },
-    button: {
-      marginTop: 40,
-      color: 'white',
-      height: 40,
-      backgroundColor: '#ec5990',
-      borderRadius: 4,
-      marginBottom: 40
-    },
-    container: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      paddingTop: 15,
-      alignItems: 'stretch',
-    },
-    input: {
-      backgroundColor: '#d4d4d4',
-      borderColor: 'white',
-      height: 40,
-      padding: 10,
-      borderRadius: 4,
-      width:300,
-    },
-  });
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+});

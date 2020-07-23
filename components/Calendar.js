@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
@@ -7,7 +6,6 @@ import moment from "moment";
 const reveil = moment().hour(6).minute(30).utc(1);
 // Représente l'heure de coucher qutidienne chosie par l'utilisateur
 const coucher = moment().hours(23).minutes(30).utc(1);
-
 
 export default function Calendar() {
     /* 
@@ -35,7 +33,6 @@ export default function Calendar() {
         // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 10' },
         // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 11' }
     ]
-
     // On tri le tableau selon l'importance ( plus la valeur est élevée plus c'est important )
     sampleEvents.sort((a, b) => (a.importance < b.importance) ? 1 : -1);
     // On parcourt l'ensemble du tableau
@@ -143,4 +140,3 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
-
