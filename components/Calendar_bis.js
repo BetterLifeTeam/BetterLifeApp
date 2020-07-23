@@ -10,8 +10,17 @@ const coucher = moment().hours(23).minutes(30).second(0).utc(1);
 // const sommeil = 
 
 const setting = {
+    "dinner": {
+        "duration": "0:25:00",
+        "start": "12:50:00",
+    },
     "lunch": {
-        "start": "12:0:00"
+        "duration": "1:20:00",
+        "start": "10:50:00",
+    },
+    "sleepTime": {
+        "start": "23:30:00",
+        "duration": "06:30:00"
     }
 }
 
@@ -46,7 +55,7 @@ const sampleEvents = [
     // { 'date': '', 'importance': '0', 'duration': '02:00:00', 'echelle': 'mois', 'note': 'Schedule 9' },
     // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 10' },
     // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 11' }
-] 
+]
 
 export default function Agenda() {
 
@@ -119,26 +128,37 @@ function giveStartToTasks() {
             for (let j = 0; j < emptyStart.length; j++) {
                 if (emptyStart[j].start == null) {
                     var durationInMinutes = moment(emptyStart[j].duration, "HH:mm:ss").diff(moment("00:00:00", "HH:mm:ss"), "minutes");
-                    
-                    
-                    if (durationInMinutes <= interval) {
-                        
-                        var toUse = moment(start);
-                        if (toUse.add(durationInMinutes, 'minutes').format("HH:mm:ss") > reveil.format("HH:mm:ss")) {
-                            
-                            if (moment(toUse, "HH:mm:ss").format("HH:mm:ss") < coucher.format("HH:mm:ss")) {
 
-                                emptyStart[j].start = start.format("YYYY-MM-DD HH:mm:ss");
-                                start.add(durationInMinutes, 'minutes');
-                                interval -= durationInMinutes;
-                            } else {
+
+                    if (durationInMinutes <= interval) {
+
+                        var toUse = moment(start);
+                        // if (toUse.add(durationInMinutes, 'minutes').format("HH:mm:ss") > reveil.format("HH:mm:ss")) {
+
+                        //     if (moment(toUse, "HH:mm:ss").format("HH:mm:ss") < coucher.format("HH:mm:ss")) {
+                        var test = true;
+
+                        for (const [key, value] of Object.entries(setting)) {
+                            
+                            var startOfSetting = moment(setting[key].start, "HH:mm:ss");
+                            var endOfSetting = moment(setting[key].start, "HH:mm:ss").add({
+                                
+                            })
+
+                            if (toUse > startOfSetting && toUse < (setting[key])) {
+                                
                             }
 
-
-                        } else {
                         }
 
-                    } else {
+                        emptyStart[j].start = start.format("YYYY-MM-DD HH:mm:ss");
+                        start.add(durationInMinutes, 'minutes');
+                        interval -= durationInMinutes;
+                        //     }
+
+
+                        // }
+
                     }
                 }
 

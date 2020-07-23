@@ -18,8 +18,8 @@ export default function Navigation(){
     return (
         <NavigationContainer>
             <Tab.Navigator>
-                {/* <Tab.Screen name="Login" component={Login} />
-                <Tab.Screen name="Calendrier" component={Calendar} /> */}
+                <Tab.Screen name="Login" component={Login} />
+                <Tab.Screen name="Calendrier" component={Calendar} />
                 <Tab.Screen name="Adding" component={UpsertTask} />
                 <Tab.Screen name="Setting" component={Setting} />
             </Tab.Navigator>
