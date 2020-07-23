@@ -111,23 +111,18 @@ class Setting extends Component {
       'note': 'Dinner moment' 
     };
 
-    // { 'start': '2020-06-23 09:00:00', 'duration': '00:20:00', 'note': 'Walk my dog' },
     const setting = { 
       "wakeUp": wakeUp,
       "lunch": lunch,
       "dinner": dinner,
       "sleep": sleep,
     }
-    console.log('valuesetting: ', setting);
 
     const action = {type: "TOGGLE_SETTING", value: setting}
     this.props.dispatch(action)
-    console.log('props after: ', this.props);
-    console.log('props after: ', this.props.timeSettings);
   }
   
   render() {
-    console.log("props", this.props);
     return (
       <View style={styles.container}>
         <Form 
@@ -159,7 +154,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Setting);
-// export default Setting;
 
 const styles = StyleSheet.create({
   container: {

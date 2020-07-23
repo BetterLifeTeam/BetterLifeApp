@@ -46,14 +46,7 @@ export default class Login extends Component {
     }
   }
 
-  render() {
-    // if(this.state.isLoading){
-    //   return(
-    //     <View style={styles.preloader}>
-    //       <ActivityIndicator size="large" color="#F44336"/>
-    //     </View>
-    //   )
-    // }    
+  render() { 
     return (
       <View style={styles.container}>  
         <TextInput
@@ -74,7 +67,12 @@ export default class Login extends Component {
           color="#2196F3"
           title="Signin"
           onPress={() => this.userLogin()}
-        />   
+        />
+        <Button
+          color="#2196F3"
+          title="Do not signin"
+          onPress={() => this.props.navigation.navigate('Dashboard')}
+        /> 
 
         <Text 
           style={styles.loginText}

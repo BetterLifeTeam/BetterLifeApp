@@ -51,19 +51,12 @@ const sampleEvents = [
     { 'date': '', 'importance': '0', 'duration': '02:00:00', 'note': 'Schedule 10' },
     { 'date': '', 'importance': '0', 'duration': '01:30:00', 'note': 'Schedule 11' },
     { 'start': '2020-10-21 22:00:00', 'duration': '02:30:00', 'note': 'Test' }
-    // { 'date': '', 'importance': '1', 'duration': '00:30:00', 'echelle': 'journée', 'note': 'Schedule 7' },
-    // { 'date': '', 'importance': '0', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 8' },
-    // { 'date': '', 'importance': '0', 'duration': '02:00:00', 'echelle': 'mois', 'note': 'Schedule 9' },
-    // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 10' },
-    // { 'date': '', 'importance': '1', 'duration': '02:00:00', 'echelle': 'semaine', 'note': 'Schedule 11' }
 ]
 
 export default function Agenda() {
 
 
     giveStartToTasks();
-    // sampleEvents.sort((a, b) => (a.importance > b.importance) ? 1 : -1);
-    // sampleEvents.sort((a, b) => (a.duration > b.duration) ? 1 : -1);
 
     // Un petit tri sur le tableau avant de l'utiliser pour être sûr que tout est classé dans l'ordre de la date
     sampleEvents.sort((a, b) => (a.start > b.start) ? 1 : -1);
@@ -134,9 +127,6 @@ function giveStartToTasks() {
                     if (durationInMinutes <= interval) {
 
                         var toUse = moment(start);
-                        // if (toUse.add(durationInMinutes, 'minutes').format("HH:mm:ss") > reveil.format("HH:mm:ss")) {
-
-                        //     if (moment(toUse, "HH:mm:ss").format("HH:mm:ss") < coucher.format("HH:mm:ss")) {
                         var test = true;
 
                         for (const [key, value] of Object.entries(setting)) {
@@ -155,11 +145,6 @@ function giveStartToTasks() {
                         emptyStart[j].start = start.format("YYYY-MM-DD HH:mm:ss");
                         start.add(durationInMinutes, 'minutes');
                         interval -= durationInMinutes;
-                        //     }
-
-
-                        // }
-
                     }
                 }
 

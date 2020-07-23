@@ -1,0 +1,93 @@
+%% Compile and read me!
+\documentclass[a4paper,12pt]{article}
+\pagestyle{empty}
+\usepackage{color}
+\usepackage{ifxetex}
+\ifxetex\usepackage{fontspec}\setmainfont[Ligatures=TeX]{CMU Serif}
+  \def\Hello{ Project BetterLife Report }
+\else\usepackage[utf8]{inputenc}\usepackage[T2A]{fontenc}
+  \def\Hello{Welcome!}
+\fi
+
+\begin{document}
+\setlength{\parindent}{0cm}{\Huge \Hello} 
+\bigskip
+\section*{Introduction}
+In this report, we will introduce you to our BetterLife mobile app which corresponds to the topic of the facilitator. The main objective of this application is to allow its user to reference in a calendar the tasks that he has entered and those retrieved directly from Google Calendar. In addition, he must be able to connect or not and be able to add a new task with specific informations, which we will discuss when explaining the features. 
+
+\bigskip
+\section*{Organization}
+
+\bigskip
+\subsubsection*{Technologies used}
+
+\bigskip
+Naouel implemented application navigation, data storage and task management. Laurie was in charge of all user login functionality and also dedicated herself to writing the report to compensate for the various issues she faced. Finally, Alexy has integrated the calendar and the dependencies related to it as well as their manipulation.
+
+\bigskip
+\subsubsection*{Tasks division}
+
+\bigskip
+A very interesting part of our app is the calendar. This one is made to show all the tasks registered by the user on the right spot. Placing dated tasks is an easy piece but the hard point is to find somewhere to put the non dated ones. Those ones only got a priority, a duration and a title and have to be placed respectively by higher priority and longest duration. This is especially hard because the app must set the beginning of those tasks smartly one after the other.
+
+\bigskip
+The first version was using the react native calendar and it's Agenda object. Quickly, this one appeared as awfull to use on our case because he needed an object with specific properties including the start datetime. Moreover, the design rendered wasn't the one we expected because you couldn't have a large enough view field of the next days.
+
+\bigskip
+After that, we found another dependancy named react-native-weekly-calendar which is much more what we were looking for. This one is more usable. 
+
+\bigskip
+Now, the big part was starting, placing tasks where they fit. At first, I tried to take a minute and to check if it's occupied by another task and if it's not can a task fit until the next one by checking minute by minute. This was anti-efficient because you had to choose a limit like "I want this task placed before the end of the week" and check every minute until then so it could take a very long time. Then, I reversed my point of view. I stopped checking if a minute is free but I started to take the space between to existing tasks and searching what could fit in there. It was much more efficient.
+
+\bigskip
+First of All, Naouël created a form which generates a task. For this she used "tcomb-form-native", a dependancy which allows to create easily forms. This is the component called <UpsertTask>. The user must fill in several fields such as the name, description and date of the task (optional), as well as its duration. It should also specify whether it is a recurring task or not. It would also be interesting to add the recurrence time (eg : daily, weekly, monthly, ...). By lack of time, Naouël didn't have the opportunity to connect it to the "Store".
+    
+\bigskip
+After that, she worked on the settings form. In this form, the user specifies the hours of sleep and meals. she also used "tcomb-form-native". The component is called <Setting>. The problem with this technology is that it is very limited to create arrays of files. She would have preferred to use react-hooks-form but the date format wasn't supported. By lack of time, she also didn't have the opportunity to connect it to the "Store".  
+ 
+\bigskip
+After that she created a store, which allows to centralize data. In this part, she encountered a lot of difficulties, particularly on combining the "Reducers". By default, she had to create a reducer which has several objects: task and setting. This project took her too long, in parallel with the tutored projects. That's why Naouël didn't have time to connect everything. It would still be more interesting to have different reducers. In the folder, Store you can find all reducer and the configure store field. She found a way to do it but couldn't push the development any further.
+You can find all reducers components and the configuration of the store component in the folder store.
+
+\bigskip
+Naouël also worked on the creation of the navigation menu and the navigation itself. For this, she used react-navigation. You can find the component in Navigation.js.
+
+\bigskip
+\section*{Functionnalities}
+\subsubsection*{User login:}
+
+\bigskip
+Currently the user has three possibilities. At first, he can choose not to connect by clicking on the “Do not signin” button. Then, he arrives on the calendar, listing all the recorded tasks. Secondly, the user has the option to connect via Firebase by clicking on the “Signin” button. It is thus towards a page containing a form to fill. This works on the functionality of connection via an email address and a password and which is made available by Firebase. To validate the login form, the user must therefore enter their email address and password. This feature only works if the user already has an account in the Firebase database. If he does not have an account, he can click on the registration link which takes him to a registration form and whose information to enter is as follows: name, email and password.
+
+\bigskip
+Although not well developed, this functionality is easily extendable. Indeed, we use Firebase as a database and it offers various features related to the connection among which we find the one mentioned above but also the fact of being able to connect with your Google account. This last point is the end goal of user login, but can therefore be easily integrated into the application code using Firebase.
+
+\bigskip
+\subsubsection*{Calendar:}
+
+\bigskip
+When the user clicks on the "Calendar" tab he lands on the calendar which shows by default the current week and the tasks in it. He can also slide down the upper part to show bigger calendar where he can pick up any other week. The days with at least one task have a small colored dot.
+
+\bigskip
+\subsubsection*{Adding a task:}
+He must fill in the various fields such as name, description, type of task, ie whether it is recurring or not, as well as the date (optionnal) and duration.
+
+\bigskip
+\subsubsection*{Configure your profile:}
+In the parameters, the user has the possibility to define the times of sleep and eating. Indeed, he can specify when he wakes up and goes to bed. He can also specify his dinner and lunch time.
+
+\bigskip
+\section*{Issues}
+
+\bigskip
+Laurie had major hardware and technical problems which caused a big delay in the development of the login space for which she was responsible. As the setup depends on the user's connection, the fact that she was unable to develop it significantly impacted the work of other team members who had to adapt other features. Thus the functions initially planned are considered as potential additions to be integrated during updates to the application.
+
+\bigskip
+Another issue that the team encountered was the timing of the project. Indeed, the project was assigned to us just before the corporate period preceding the tutor projects which lasted three weeks (period during which we could not devote ourselves to other projects). In addition, the project was impacted by the work in the company, especially for Laurie and Naouel who had obligations on other projects.
+
+\bigskip
+Another major difficulty is the remote work that made communication difficult. Indeed, there was always a person who had connection problems or sounds.
+
+
+\bigskip
+\end{document}
