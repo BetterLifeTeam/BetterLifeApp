@@ -1,8 +1,10 @@
 import { createStore, combineReducers} from 'redux';
-import toggleTask from './Reducer/TaskReducer'
-import toggleSetting from './Reducer/SettingReducer'
+import toggleSetting from './Reducer/SettingReducer';
+import toggleTask from './Reducer/TaskReducer';
 
-export default createStore(combineReducers({
-    toggleTask,
-    toggleSetting
-  }))
+const reducers = combineReducers({
+  toggleTask,
+  toggleSetting
+})
+
+export default createStore(toggleSetting)

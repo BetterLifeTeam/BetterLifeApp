@@ -1,25 +1,23 @@
-const initialState = { setting: {}}
+const initialState = { timeSettings: {}, dattedTask: [], recurrentTask: []}
 
 function toggleSetting(state = initialState, action) {
+  console.log("hereee");
   let nextState
   switch (action.type) {
     case 'TOGGLE_SETTING':
-      const favoriteFilmIndex = state.setting.findIndex(item => item.id === action.value.id)
-      if (favoriteFilmIndex !== -1) {
-        // Le film est déjà dans les favoris, on le supprime de la liste
-        nextState = {
-          ...state,
-          setting: state.setting.filter( (item, index) => index !== favoriteFilmIndex)
-        }
+      return {...state, timeSettings: action.value }
+    case 'ADD_DATTED_TASK':
+      nextState = {
+        ...state,
+        dattedTask: [...state.dattedTask, action.value]
       }
-      else {
-        // Le film n'est pas dans les films favoris, on l'ajoute à la liste
-        nextState = {
-          ...state,
-          setting: [...state.setting, action.value]
-        }
+    return nextState || task
+    case 'ADD_RECCURENT_TASK':
+      nextState = {
+        ...state,
+        recurrentTask: [...state.recurrentTask, action.value]
       }
-      return nextState || state
+    return nextState || task
   default:
     return state
   }
