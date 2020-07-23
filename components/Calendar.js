@@ -5,6 +5,7 @@ import moment, { duration } from "moment";
 // Représente l'heure de réveil quotidienne choisie par l'utilisateur
 const reveil = moment().hour(6).minute(30).second(0).utc(1);
 // Représente l'heure de coucher qutidienne chosie par l'utilisateur
+
 const coucher = moment().hours(23).minutes(30).second(0).utc(1);
 // Cacule la différence entre le coucher et le réveil
 // const sommeil = 
