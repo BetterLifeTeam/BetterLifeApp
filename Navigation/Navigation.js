@@ -11,7 +11,7 @@ import UpsertTask from './../components/UpsertTask';
 import Setting from './../components/Setting';
 
 // Laurie Pages
-import Login from './../components/Login';
+import Signin from './../components/Signin';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +19,7 @@ export default function Navigation(){
     return (
         <NavigationContainer>
             <Tab.Navigator>
-                <Tab.Screen name="Login" component={Login} />
+                <Tab.Screen name="Signin" component={Signin} />
                 {/* <Tab.Screen name="Calendrier" component={Calendar} /> */}
                 <Tab.Screen name="Calendrier" component={Agenda} />
                 <Tab.Screen name="Adding" component={UpsertTask} />
